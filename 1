@@ -1,0 +1,145 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace task1
+{
+    class Program
+    {
+        public abstract class Pupil
+        {
+            private readonly string? Name;
+
+            public Pupil(string? name)
+            {
+                Name = name;
+            }
+            public string? name { get { return this.Name; } }
+
+            public abstract void Study();
+            public abstract void Write();
+            public abstract void Read();
+            public abstract void Relax();
+        }
+        public class ExcellentPupil: Pupil
+        {
+            private readonly string? Name;
+
+            public ExcellentPupil(string? name): base(name)
+            {
+                this.Name = name;
+            }
+            public string? name { get => this.Name; }
+            public override void Study()
+            {
+                Console.Write(this.Name);
+                Console.WriteLine("Я отличник!");
+            }
+            public override void Write()
+            {
+                Console.WriteLine("У меня аккуратный почерк и пятёрка по русскому");
+            }
+            public override void Read()
+            {
+                Console.WriteLine("У меня прекрасное произношение. Я лучше всех читаю вслух");
+            }
+            public override void Relax()
+            {
+                Console.WriteLine("Когда я отдыхаю, я предпочитаю читать книги или ходить в музей");
+            }
+        }
+        public class GoodPupil : Pupil
+        {
+            private readonly string? Name;
+
+            public GoodPupil(string? name) : base(name)
+            {
+                this.Name = name;
+            }
+            public string? name { get => this.Name; }
+            public override void Study() {
+                Console.Write(this.Name);
+                Console.WriteLine("Я хорошист!");
+            }
+            public override void Write() {
+                Console.WriteLine("У меня хороший почерк и четвёрка по русскому");
+            }
+            public override void Read() {
+                Console.WriteLine("У меня хорошее произношение. Я редко допускаю ошибки при чтении");
+            }
+            public override void Relax() {
+                Console.WriteLine("Когда я отдыхаю, я предпочитаю заниматься спортом или гулять");
+            }
+        }
+        public class BadPupil : Pupil
+        {
+            private readonly string? Name;
+
+            public BadPupil(string? name) : base(name)
+            {
+                this.Name = name;
+            }
+            public string? name { get => this.Name; }
+            public override void Study()
+            {
+                Console.Write(this.Name);
+                Console.WriteLine("Я отстающий!");
+            }
+            public override void Write()
+            {
+                Console.WriteLine("Я не хожу в школу");
+            }
+            public override void Read()
+            {
+                Console.WriteLine("Зачем вообще что-то читать?");
+            }
+            public override void Relax()
+            {
+                Console.WriteLine("Лучший отдых - лишние пару часов за компом вместо школы");
+            }
+        }
+        public class ClassRoom
+        {
+            List<Pupil> pupils = new List<Pupil>();
+            public ClassRoom(params string?[] pup)
+            {
+                for (int i = 0; i < pup.Length; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        this.pupils.Add(new ExcellentPupil(pup[i]));
+                    }
+                    else if (i % 3 == 0)
+                    {
+                        this.pupils.Add(new GoodPupil(pup[i]));
+                    }
+                    else
+                    {
+                        this.pupils.Add(new BadPupil(pup[i]));
+                    }
+                }
+            }
+            public void Information(int index)
+            {
+                if (index < pupils.Count && index >= 0)
+                {
+                    pupils[index].Study();
+                    pupils[index].Write();
+                    pupils[index].Read();
+                    pupils[index].Relax();
+                }
+            }
+        }
+        public static void Main(string[] args)
+        {
+            ClassRoom room = new ClassRoom("Mark", "Vika", "Clare");
+            room.Information(0);
+            room.Information(1);
+            room.Information(2);
+        }
+    }
+
+}
