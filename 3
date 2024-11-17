@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace task3
+{
+    class DocumentWorker
+    {
+        public DocumentWorker()
+        {
+            Console.WriteLine("Вы открыли базовую версию текстового редактора");
+        }
+        public virtual void OpenDocument()
+        {
+            Console.WriteLine("Документ открыт");
+        }
+        public virtual void EditDocument() 
+        { 
+            Console.WriteLine("Редактирование документа доступно в версии Pro"); 
+        }
+        public virtual void SaveDocument() 
+        { 
+            Console.WriteLine("Сохранение документа доступно в версии Pro");
+        }
+    }
+    class ProDocumentWorker : DocumentWorker
+    {
+        public ProDocumentWorker() : base()
+        {
+            Console.WriteLine("Вы открыли ПРОверсию текстового редактора");
+        }
+        public override void OpenDocument()
+        {
+            base.OpenDocument();
+        }
+        public override void EditDocument()
+        {
+            Console.WriteLine("Документ отредактирован");
+        }
+        public override void SaveDocument()
+        {
+            Console.WriteLine("Документ сохранен в старом формате, сохранение в остальных форматах доступно в версии Expert");
+        }
+    }
+    class ExpertDocumentWorker : ProDocumentWorker
+    {
+        public ExpertDocumentWorker() : base()
+        {
+            Console.WriteLine("Вы открыли ЭКСПЕРТверсию текстового редактора");
+        }
+        public override void OpenDocument()
+        {
+            base.OpenDocument();
+        }
+        public override void EditDocument()
+        {
+            base.EditDocument();
+        }
+        public override void SaveDocument()
+        {
+            Console.WriteLine("Документ сохранен в новом формате");
+        }
+    }
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Введите ключ доступа. В случае не имения такого введите 0");
+            string? input;
+            input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input)) return;
+            
+            if(input == "0")
+            {
+                DocumentWorker worker = new DocumentWorker();
+                worker.OpenDocument();
+                worker.EditDocument();
+                worker.SaveDocument();
+            }
+            if(input == "1")
+            {
+                Console.WriteLine("Введите ключ доступа для уровня ПРО");
+                input = (Console.ReadLine());
+
+                while (input != "prokey")
+                {
+                    Console.WriteLine("Неверный ключ");
+                    input = (Console.ReadLine());
+                }
+                ProDocumentWorker proworker = new ProDocumentWorker();
+                proworker.OpenDocument();
+                proworker.EditDocument();
+                proworker.SaveDocument();
+            }
+            if( input == "2")
+            {
+                Console.WriteLine("Введите ключ доступа для уровня Эксперт");
+                input = (Console.ReadLine());
+
+                while (input != "expkey")
+                {
+                    Console.WriteLine("Неверный ключ");
+                    input = (Console.ReadLine());
+                }
+                ExpertDocumentWorker expertDocumentWorker = new ExpertDocumentWorker();
+                expertDocumentWorker.OpenDocument();
+                expertDocumentWorker.EditDocument();
+                expertDocumentWorker.SaveDocument();
+            }
+
+        }
+    }
+}
