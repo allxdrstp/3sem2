@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_2
+{
+    public abstract class Vehicle
+    {
+        protected double longitude;
+        protected double latitude;
+        protected double cost;
+        protected double speed;
+        protected int year;
+        public Vehicle(double longitude, double latitude, double cost, double speed, int year)
+        {
+            this.longitude = longitude;
+            this.latitude = latitude;
+            this.cost = cost;
+            this.speed = speed;
+            this.year = year;
+        }
+        public virtual void Info()
+        {
+            Console.WriteLine(
+                             $"Length : {this.longitude}\n"
+                            + $"Width  : {this.latitude}\n"
+                            + $"Price  : {this.cost}\n"
+                            + $"Max.Speed : {this.speed}\n"
+                            + $"ProductionYear : {this.year}");
+
+        }
+
+    }
+    class Plane: Vehicle
+    {
+        private int capacity;
+        private double height;
+        public Plane(double longitude, double latitude, double cost, double speed, int year, int capacity, double height) : base(longitude, latitude, cost, speed, year)
+        { 
+        this.capacity = capacity;
+        this.height = height;
+        }
+        public override void Info()
+        {
+            Console.WriteLine($"\nType : {typeof(Plane)}");
+            base.Info();
+            Console.WriteLine(
+                             $"Capacity : {this.capacity}\n"
+                            + $"Height  : {this.height}\n");
+        }
+    }
+    class Car : Vehicle
+    {
+        public Car(double longitude, double latitude, double cost, double speed, int year) : base(longitude, latitude, cost, speed, year) { }
+        public override void Info()
+        {
+            Console.WriteLine($"\nType : {typeof(Car)}");
+            base.Info();
+        }
+
+    }
+    class Ship : Vehicle
+    {
+        private int capacity;
+        private int port_id;
+        public Ship(double longitude, double latitude, double cost, double speed, int year, int capacity, int port_id) : base(longitude, latitude, cost, speed, year)
+        {
+            this.capacity = capacity;
+            this.port_id = port_id;
+        }
+        public override void Info()
+        {
+            Console.WriteLine($"\nType : {typeof(Ship)}");
+            base.Info();
+            Console.WriteLine(
+                             $"Capacity : {this.capacity}\n"
+                            + $"Port ID : {this.port_id}\n");
+        }
+    }
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Vehicle Audi = new Car(15, 12, 3000000, 300, 2023);
+            Vehicle Queen = new Ship(33, 78.15, 150000000, 1000, 1980, 15000, 2323);
+            Audi.Info();
+            Queen.Info();
+        }
+    }
+}
